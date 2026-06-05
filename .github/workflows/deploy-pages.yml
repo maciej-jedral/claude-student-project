@@ -26,11 +26,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Tries to enable Pages automatically (build type: GitHub Actions).
+      # Pages is enabled via repo Settings (Source: GitHub Actions); just read its config.
       - name: Configure Pages
         uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       # Publish the repository root (index.html lives here).
       - name: Upload site artifact
