@@ -2,7 +2,7 @@ name: Deploy static site to GitHub Pages
 
 on:
   push:
-    branches: ["claude/brave-einstein-EDGb3"]
+    branches: ["main"]
   workflow_dispatch:
 
 # Permissions needed for the GITHUB_TOKEN to deploy (and enable) Pages.
