@@ -4,21 +4,21 @@
   --bg: #fdeee1;
   --bg-2: #fbdfce;
   --surface: #fffaf5;
-  --surface-2: #fceadd;
-  --line: #f1ddcd;
-  /* tekst — głęboki śliwkowo-burgundowy */
-  --text: #41212f;
-  --muted: #8f6f76;
-  /* akcent główny — koralowo-czerwony zachód */
-  --primary: #e25742;
-  --primary-700: #bf3a2c;
-  --primary-50: #ffe6dd;
-  /* akcent ciepły — bursztynowo-złoty */
-  --accent: #efa23c;
-  --accent-50: #fde9cd;
-  --warm: #ff8d63;
-  --danger: #d6443a;
-  --ok: #5aa178;
+  --surface-2: #fbe7d8;
+  --line: #ecd2bf;
+  /* tekst — mocny kontrast, ciepła głęboka śliwka */
+  --text: #2c1219;
+  --muted: #6e4a54;
+  /* akcent główny — soczysta koralowa czerwień zachodu */
+  --primary: #e6482b;
+  --primary-700: #bb3119;
+  --primary-50: #ffe3d8;
+  /* akcent ciepły — soczysty bursztyn */
+  --accent: #f2951b;
+  --accent-50: #ffe6c2;
+  --warm: #ff8a5c;
+  --danger: #d83a2c;
+  --ok: #4f9b6f;
   --shadow: 0 16px 36px -20px rgba(122, 38, 38, .42);
   --shadow-sm: 0 6px 16px -10px rgba(122, 38, 38, .38);
   --radius: 18px;
@@ -34,11 +34,11 @@ body {
   color: var(--text);
   /* niebo zachodzącego słońca: złoto u góry, koralowa chmura, śliwkowy zmierzch u dołu */
   background:
-    radial-gradient(1000px 460px at 84% -10%, #ffd9a3 0%, rgba(255,217,163,0) 60%),
-    radial-gradient(940px 520px at 116% 6%, #ff9c79 0%, rgba(255,156,121,0) 55%),
-    radial-gradient(720px 480px at -16% 116%, #b56f95 0%, rgba(181,111,149,0) 60%),
-    radial-gradient(680px 420px at 30% 120%, #e7704a 0%, rgba(231,112,74,0) 62%),
-    linear-gradient(180deg, #fff2e1 0%, #ffdfc9 46%, #f3bda6 100%);
+    radial-gradient(1000px 460px at 86% -10%, #ffcf86 0%, rgba(255,207,134,0) 60%),
+    radial-gradient(980px 540px at 118% 4%, #ff875c 0%, rgba(255,135,92,0) 56%),
+    radial-gradient(760px 500px at -18% 118%, #ad5f8c 0%, rgba(173,95,140,0) 60%),
+    radial-gradient(720px 440px at 28% 122%, #e85d34 0%, rgba(232,93,52,0) 62%),
+    linear-gradient(180deg, #fff6ec 0%, #ffe3cf 50%, #f6c3a9 100%);
   background-attachment: fixed;
   min-height: 100vh;
   line-height: 1.5;
