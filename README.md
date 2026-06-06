@@ -11,10 +11,10 @@ A small web project hosted on **GitHub Pages**.
 
 | Path | What it is |
 | --- | --- |
-| `index.html` | The page served at the live URL (currently the placeholder). |
+| `index.html`, `styles.css`, `app.js`, `data.js` | Aplikacja **Buddy app** (strona główna). |
 | `.github/workflows/deploy-pages.yml` | Auto-deploys the site to GitHub Pages on every push to `main`. |
 | `.gitignore` | Ignores common JS / Node build artifacts. |
-| `app/` | Prototyp **Buddy app** (w budowie): `index.html` + `styles.css` + `app.js` + `data.js`. |
+| `app-placeholder/` | Wcześniejsza strona-placeholder (scena 4 studentek). |
 
 ## View it locally
 
@@ -57,10 +57,10 @@ git switch claude/brave-einstein-EDGb3   # back to working
 ## Prototyp — Buddy app (w toku)
 
 Wsparcie młodych dorosłych na starcie pracy w korporacji (na podstawie raportu z badania).
-Kod w folderze `app/`. Podgląd lokalnie: otwórz **`app/index.html`** w przeglądarce.
+Kod w katalogu głównym. Podgląd lokalnie: otwórz **`index.html`** w przeglądarce.
 
 - [x] Szkielet aplikacji + nawigacja + panel „Twój tydzień" (PSS‑10, UWES‑9, CBT, self‑compassion)
 - [x] Moduł **Buddy Match** — quiz → dopasowanie buddy/seniora → 3 sesje 1:1 + mini‑ankiety
 - [x] Moduł **Know‑How na teraz** — mikro‑lekcje just‑in‑time, quizy (retrieval), checklisty, wyszukiwarka
 - [x] Moduł **Jasne Oczekiwania** — kanwa oczekiwań + check‑in „Weekly 15" + suwak jasności zadań (0–100)
-- [ ] Docelowo: przeniesienie `app/` do katalogu głównego (zastąpienie placeholdera)
+- [x] Buddy app ustawiona jako **strona główna** (placeholder przeniesiony do `app-placeholder/`)

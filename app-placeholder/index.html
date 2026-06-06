@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Four Students, One App Idea</title>
+<style>
+  :root {
+    --bg1: #fdf6ec;
+    --bg2: #ece4ff;
+    --ink: #2f3142;
+    --muted: #6c7090;
+    --card: #ffffff;
+    --accent: #6a8cff;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+  }
+
+  body {
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, system-ui, sans-serif;
+    color: var(--ink);
+    background:
+      radial-gradient(1200px 600px at 15% -10%, #fff7e6 0%, transparent 55%),
+      radial-gradient(1000px 700px at 110% 120%, #e3dbff 0%, transparent 50%),
+      linear-gradient(160deg, var(--bg1), var(--bg2));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 28px 18px 40px;
+    min-height: 100vh;
+  }
+
+  header {
+    text-align: center;
+    max-width: 760px;
+    margin-bottom: 14px;
+  }
+
+  h1 {
+    margin: 0 0 8px;
+    font-size: clamp(26px, 4.5vw, 42px);
+    letter-spacing: -0.5px;
+  }
+
+  h1 .spark { color: var(--accent); }
+
+  .tag {
+    margin: 0;
+    color: var(--muted);
+    font-size: clamp(14px, 2.2vw, 18px);
+    line-height: 1.5;
+  }
+
+  .stage {
+    width: 100%;
+    max-width: 960px;
+    background: var(--card);
+    border-radius: 26px;
+    padding: 10px;
+    box-shadow:
+      0 30px 60px -25px rgba(48, 49, 66, 0.35),
+      0 4px 14px -8px rgba(48, 49, 66, 0.25);
+  }
+
+  .stage svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 18px;
+  }
+
+  .foot {
+    margin: 18px 0 0;
+    color: var(--muted);
+    font-size: 14px;
+    letter-spacing: 0.3px;
+  }
+
+  /* ---- animations ---- */
+  .float    { animation: floaty 4.5s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+  .float-2  { animation: floaty 5.5s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+  .glow     { animation: glowpulse 3s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+  .rays     { animation: raypulse 3s ease-in-out infinite; }
+  .spk      { animation: twinkle 2.4s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+
+  .bubble {
+    transform-box: fill-box;
+    transform-origin: center;
+    opacity: 0;
+    animation: pop 0.6s cubic-bezier(.2,.9,.3,1.3) forwards;
+  }
+  .b1 { animation-delay: .3s; }
+  .b2 { animation-delay: .6s; }
+  .b3 { animation-delay: .9s; }
+  .b4 { animation-delay: 1.2s; }
+
+  @keyframes floaty   { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+  @keyframes glowpulse{ 0%,100% { opacity: .45; transform: scale(.92); } 50% { opacity: .8; transform: scale(1.06); } }
+  @keyframes raypulse { 0%,100% { opacity: .35; } 50% { opacity: 1; } }
+  @keyframes twinkle  { 0%,100% { opacity: .2; transform: scale(.7); } 50% { opacity: 1; transform: scale(1.1); } }
+  @keyframes pop      { from { opacity: 0; transform: scale(.85) translateY(6px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .float, .float-2, .glow, .rays, .spk, .bubble { animation: none; opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+  <header>
+    <h1>Four Students, One App Idea <span class="spark">&#128161;</span></h1>
+    <p class="tag">Gathered in a circle on their chairs, brainstorming how to build the app for their class project.</p>
+  </header>
+
+  <main class="stage">
+    <svg viewBox="0 0 1000 720" role="img" aria-labelledby="sceneTitle sceneDesc" xmlns="http://www.w3.org/2000/svg">
+      <title id="sceneTitle">Four students sitting in a circle on chairs</title>
+      <desc id="sceneDesc">Four students sit in a circle on chairs around a small idea space, with speech bubbles as they figure out how to build their project app, and a glowing lightbulb above them.</desc>
+
+      <defs>
+        <radialGradient id="glowGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%"  stop-color="#ffe88a" stop-opacity="0.95"/>
+          <stop offset="55%" stop-color="#ffd34d" stop-opacity="0.45"/>
+          <stop offset="100%" stop-color="#ffd34d" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="floor" cx="50%" cy="45%" r="60%">
+          <stop offset="0%"  stop-color="#efe8ff"/>
+          <stop offset="100%" stop-color="#ddd2f5"/>
+        </radialGradient>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"  stop-color="#fbf7ff"/>
+          <stop offset="100%" stop-color="#f1ecfb"/>
+        </linearGradient>
+        <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+          <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#2f3142" flood-opacity="0.16"/>
+        </filter>
+
+        <!-- ===== FRONT-FACING SEATED STUDENT ===== -->
+        <symbol id="student-front" viewBox="0 0 160 220">
+          <!-- chair back -->
+          <rect x="44" y="60" width="72" height="94" rx="14" fill="var(--chair)"/>
+          <rect x="44" y="60" width="72" height="20" rx="10" fill="var(--chairD)"/>
+          <!-- chair back legs -->
+          <rect x="46" y="150" width="8" height="54" rx="3" fill="var(--chairD)"/>
+          <rect x="106" y="150" width="8" height="54" rx="3" fill="var(--chairD)"/>
+          <!-- lower legs -->
+          <rect x="56" y="148" width="20" height="50" rx="9" fill="var(--pants)"/>
+          <rect x="84" y="148" width="20" height="50" rx="9" fill="var(--pants)"/>
+          <!-- shoes -->
+          <ellipse cx="62" cy="200" rx="15" ry="8" fill="#2c2b38"/>
+          <ellipse cx="98" cy="200" rx="15" ry="8" fill="#2c2b38"/>
+          <!-- chair seat -->
+          <rect x="44" y="138" width="72" height="14" rx="5" fill="var(--chairD)"/>
+          <!-- thighs / lap -->
+          <rect x="46" y="116" width="68" height="30" rx="15" fill="var(--pants)"/>
+          <!-- torso -->
+          <path d="M50,120 L58,80 Q80,66 102,80 L110,120 Q80,130 50,120 Z" fill="var(--shirt)"/>
+          <!-- arms resting on lap -->
+          <path d="M59,84 Q45,106 60,122" fill="none" stroke="var(--shirt)" stroke-width="15" stroke-linecap="round"/>
+          <path d="M101,84 Q115,106 100,122" fill="none" stroke="var(--shirt)" stroke-width="15" stroke-linecap="round"/>
+          <circle cx="61" cy="123" r="7.5" fill="var(--skin)"/>
+          <circle cx="99" cy="123" r="7.5" fill="var(--skin)"/>
+          <!-- neck -->
+          <rect x="73" y="58" width="14" height="14" rx="5" fill="var(--skin)"/>
+          <!-- ears -->
+          <circle cx="56" cy="42" r="6" fill="var(--skin)"/>
+          <circle cx="104" cy="42" r="6" fill="var(--skin)"/>
+          <!-- head -->
+          <circle cx="80" cy="40" r="24" fill="var(--skin)"/>
+          <!-- hair -->
+          <path d="M54,42 C52,12 108,12 106,42 C106,28 96,22 80,22 C64,22 54,28 54,42 Z" fill="var(--hair)"/>
+          <!-- eyes + smile -->
+          <circle cx="72" cy="40" r="2.6" fill="#2c2b38"/>
+          <circle cx="88" cy="40" r="2.6" fill="#2c2b38"/>
+          <path d="M71,49 Q80,57 89,49" fill="none" stroke="#2c2b38" stroke-width="2.2" stroke-linecap="round"/>
+        </symbol>
+
+        <!-- ===== BACK-FACING SEATED STUDENT ===== -->
+        <symbol id="student-back" viewBox="0 0 160 220">
+          <!-- chair back top peeking above shoulders -->
+          <rect x="46" y="56" width="68" height="28" rx="11" fill="var(--chairD)"/>
+          <!-- chair back legs -->
+          <rect x="46" y="150" width="8" height="54" rx="3" fill="var(--chairD)"/>
+          <rect x="106" y="150" width="8" height="54" rx="3" fill="var(--chairD)"/>
+          <!-- lower legs -->
+          <rect x="56" y="148" width="20" height="50" rx="9" fill="var(--pants)"/>
+          <rect x="84" y="148" width="20" height="50" rx="9" fill="var(--pants)"/>
+          <!-- shoe heels -->
+          <ellipse cx="62" cy="200" rx="14" ry="8" fill="#2c2b38"/>
+          <ellipse cx="98" cy="200" rx="14" ry="8" fill="#2c2b38"/>
+          <!-- chair seat -->
+          <rect x="44" y="138" width="72" height="14" rx="5" fill="var(--chair)"/>
+          <!-- hips / lap -->
+          <rect x="46" y="116" width="68" height="30" rx="15" fill="var(--pants)"/>
+          <!-- back / torso -->
+          <path d="M50,120 L58,80 Q80,66 102,80 L110,120 Q80,130 50,120 Z" fill="var(--shirt)"/>
+          <!-- arms -->
+          <path d="M58,84 Q44,108 58,124" fill="none" stroke="var(--shirt)" stroke-width="15" stroke-linecap="round"/>
+          <path d="M102,84 Q116,108 102,124" fill="none" stroke="var(--shirt)" stroke-width="15" stroke-linecap="round"/>
+          <!-- neck -->
+          <rect x="73" y="56" width="14" height="14" rx="5" fill="var(--skin)"/>
+          <!-- back of head (hair, no face) -->
+          <circle cx="80" cy="40" r="25" fill="var(--hair)"/>
+          <path d="M63,57 Q80,66 97,57 L97,50 Q80,57 63,50 Z" fill="var(--hair)"/>
+        </symbol>
+      </defs>
+
+      <!-- backdrop -->
+      <rect x="0" y="0" width="1000" height="720" fill="url(#sky)"/>
+
+      <!-- corner doodles -->
+      <text class="float"   x="70"  y="86"  font-size="34" font-weight="700" fill="#cdc4ee" font-family="monospace">&lt;/&gt;</text>
+      <text class="float-2" x="880" y="92"  font-size="34" font-weight="700" fill="#d7cfb0" font-family="monospace">{ }</text>
+      <text class="float-2" x="56"  y="640" font-size="30" font-weight="700" fill="#d8cfee" font-family="monospace">01</text>
+      <text class="float"   x="900" y="650" font-size="30" font-weight="700" fill="#cfe0d8" font-family="monospace">&#128241;</text>
+
+      <!-- glowing shared idea -->
+      <g class="float">
+        <circle class="glow" cx="500" cy="104" r="58" fill="url(#glowGrad)"/>
+        <g class="rays" stroke="#f4c020" stroke-width="4" stroke-linecap="round">
+          <line x1="500" y1="38"  x2="500" y2="20"/>
+          <line x1="446" y1="58"  x2="432" y2="46"/>
+          <line x1="554" y1="58"  x2="568" y2="46"/>
+          <line x1="430" y1="104" x2="412" y2="104"/>
+          <line x1="570" y1="104" x2="588" y2="104"/>
+        </g>
+        <circle cx="500" cy="104" r="30" fill="#fff3b0" stroke="#e7b53d" stroke-width="3"/>
+        <path d="M491,116 Q486,108 489,100 A12 12 0 1 1 511,100 Q514,108 509,116 Z" fill="#ffe27a" stroke="#e7b53d" stroke-width="2"/>
+        <path d="M494,98 L500,108 L506,98" fill="none" stroke="#e7b53d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <rect x="491" y="118" width="18" height="6"  rx="2" fill="#c9ccd6"/>
+        <rect x="493" y="125" width="14" height="5"  rx="2" fill="#aeb2c0"/>
+        <text class="spk" x="448" y="70"  font-size="20" fill="#f4c020">&#10022;</text>
+        <text class="spk" x="556" y="84"  font-size="16" fill="#f4c020">&#10022;</text>
+      </g>
+
+      <!-- floor / circle they sit around -->
+      <ellipse cx="500" cy="438" rx="210" ry="82" fill="url(#floor)"/>
+      <ellipse cx="500" cy="438" rx="150" ry="56" fill="none" stroke="#cfc2ee" stroke-width="2" stroke-dasharray="3 9"/>
+
+      <!-- BACK student (far side, faces us) -->
+      <use href="#student-front" x="425" y="158" width="150" height="206"
+           style="--skin:#f1c8a0;--hair:#3a2a22;--shirt:#ff6b6b;--pants:#34507a;--chair:#cf9a5b;--chairD:#a9763d;"/>
+
+      <!-- LEFT student (faces center) -->
+      <g transform="rotate(7 275 367)">
+        <use href="#student-front" x="190" y="250" width="170" height="234"
+             style="--skin:#e7b083;--hair:#5b3a26;--shirt:#39c2a0;--pants:#3a3a4a;--chair:#cf9a5b;--chairD:#a9763d;"/>
+      </g>
+
+      <!-- RIGHT student (faces center) -->
+      <g transform="rotate(-7 725 367)">
+        <use href="#student-front" x="640" y="250" width="170" height="234"
+             style="--skin:#c79a72;--hair:#1f1b1b;--shirt:#ffce4f;--pants:#5a3e6b;--chair:#cf9a5b;--chairD:#a9763d;"/>
+      </g>
+
+      <!-- table props beside the near seat -->
+      <g filter="url(#soft)">
+        <!-- laptop -->
+        <rect x="356" y="430" width="64" height="40" rx="5" fill="#3a3f57"/>
+        <rect x="362" y="436" width="52" height="28" rx="3" fill="#8ec5ff"/>
+        <rect x="348" y="468" width="80" height="8"  rx="4" fill="#aeb4cf"/>
+        <!-- phone showing APP -->
+        <rect x="586" y="430" width="34" height="58" rx="7" fill="#2f3142"/>
+        <rect x="591" y="436" width="24" height="46" rx="3" fill="#cfe0ff"/>
+        <text x="603" y="464" font-size="11" font-weight="800" fill="#6a8cff" text-anchor="middle" font-family="system-ui">APP</text>
+      </g>
+      <!-- sticky notes -->
+      <rect x="430" y="476" width="34" height="30" rx="3" fill="#ffe27a" transform="rotate(-8 447 491)"/>
+      <rect x="548" y="478" width="32" height="28" rx="3" fill="#b6f0c8" transform="rotate(7 564 492)"/>
+
+      <!-- FRONT student (near side, back to us) drawn last -->
+      <use href="#student-back" x="405" y="300" width="190" height="261"
+           style="--skin:#f0c49a;--hair:#2a2320;--shirt:#6a8cff;--pants:#3a3a4a;--chair:#cf9a5b;--chairD:#a9763d;"/>
+
+      <!-- ================= SPEECH BUBBLES ================= -->
+      <!-- Back student -->
+      <g class="bubble b1">
+        <path d="M560,128 h188 a16 16 0 0 1 16 16 v40 a16 16 0 0 1 -16 16 h-188 a16 16 0 0 1 -16 -16 v-40 a16 16 0 0 1 16 -16 Z
+                 M566,200 l-18 26 l34 -10 Z" fill="#ffffff" stroke="#e2e6f2" stroke-width="2" filter="url(#soft)"/>
+        <text x="654" y="158" text-anchor="middle" font-size="17" font-weight="600" fill="#3a3f51" font-family="system-ui">
+          <tspan x="654" dy="0">What should our</tspan>
+          <tspan x="654" dy="22">app actually do?</tspan>
+        </text>
+      </g>
+
+      <!-- Left student -->
+      <g class="bubble b2">
+        <path d="M52,236 h176 a16 16 0 0 1 16 16 v40 a16 16 0 0 1 -16 16 h-176 a16 16 0 0 1 -16 -16 v-40 a16 16 0 0 1 16 -16 Z
+                 M236,300 l30 22 l-30 -2 Z" fill="#ffffff" stroke="#e2e6f2" stroke-width="2" filter="url(#soft)"/>
+        <text x="140" y="266" text-anchor="middle" font-size="17" font-weight="600" fill="#3a3f51" font-family="system-ui">
+          <tspan x="140" dy="0">First we need a</tspan>
+          <tspan x="140" dy="22">login screen.</tspan>
+        </text>
+      </g>
+
+      <!-- Right student -->
+      <g class="bubble b3">
+        <path d="M756,236 h188 a16 16 0 0 1 16 16 v40 a16 16 0 0 1 -16 16 h-188 a16 16 0 0 1 -16 -16 v-40 a16 16 0 0 1 16 -16 Z
+                 M760,300 l-28 22 l28 -2 Z" fill="#ffffff" stroke="#e2e6f2" stroke-width="2" filter="url(#soft)"/>
+        <text x="850" y="266" text-anchor="middle" font-size="17" font-weight="600" fill="#3a3f51" font-family="system-ui">
+          <tspan x="850" dy="0">And a database</tspan>
+          <tspan x="850" dy="22">to store users!</tspan>
+        </text>
+      </g>
+
+      <!-- Front student -->
+      <g class="bubble b4">
+        <path d="M352,604 h220 a16 16 0 0 1 16 16 v44 a16 16 0 0 1 -16 16 h-220 a16 16 0 0 1 -16 -16 v-44 a16 16 0 0 1 16 -16 Z
+                 M470,604 l-8 -26 l28 26 Z" fill="#ffffff" stroke="#e2e6f2" stroke-width="2" filter="url(#soft)"/>
+        <text x="462" y="636" text-anchor="middle" font-size="17" font-weight="600" fill="#3a3f51" font-family="system-ui">
+          <tspan x="462" dy="0">I'll design the UI</tspan>
+          <tspan x="462" dy="22">and make it pop! &#127912;</tspan>
+        </text>
+      </g>
+
+    </svg>
+  </main>
+
+  <p class="foot">Study group &#8226; Computer Science Project</p>
+
+</body>
+</html>
