@@ -322,3 +322,24 @@ const LESSONS = [
     steps: ["Otwórz system ewidencji czasu", "Wybierz właściwy projekt lub zadanie", "Wpisz godziny w odpowiednie dni", "Zapisz i sprawdź sumę tygodniową", "Zatwierdź wpis przed terminem rozliczenia"],
     quiz: { q: "Co zwykle trzeba wybrać przy wpisie czasu?", options: ["Projekt / zadanie", "Pogodę", "Ulubiony kolor"], correct: 0 } }
 ];
+
+/* ---------- Jasne Oczekiwania: teoria + formularze ---------- */
+const EXPECT_THEORY = {
+  title: "Dlaczego to działa",
+  body: "Jasno nazwane oczekiwania zmniejszają <b>niejasność roli</b> (role ambiguity, Kahn i in.) — częste źródło stresu na starcie. Konkretne, mierzalne cele działają lepiej niż „rób dobrze” (teoria wyznaczania celów, Locke i Latham), a plany <b>„jeśli–to”</b> (intencje implementacyjne, Gollwitzer) zwiększają szansę, że ustalenia zamienisz w działanie.",
+  cite: "Kahn i in. (jasność roli) · Locke & Latham · Gollwitzer"
+};
+
+const CANVAS_FORM = [
+  { key: "role", label: "Moja rola — po co tu jestem (1–2 zdania)", type: "textarea", ph: "np. Wspieram zespół X w… Odpowiadam za…" },
+  { key: "priorities", label: "Priorytety na najbliższy miesiąc", type: "textarea", ph: "2–3 najważniejsze rzeczy" },
+  { key: "success", label: "Po czym poznam sukces (kryteria)", type: "textarea", ph: "np. „gotowe, gdy…”, mierzalne efekty" }
+];
+
+const CHECKIN_FORM = [
+  { key: "works", label: "✅ Co działa / co poszło dobrze", type: "textarea", ph: "Konkretne sytuacje z ostatniego tygodnia" },
+  { key: "blocks", label: "⛔ Co blokuje / czego nie wiem", type: "textarea", ph: "Przeszkody, niejasności, brakujące dostępy" },
+  { key: "next", label: "➡️ Co konkretnie zrobimy do następnego razu", type: "textarea", ph: "Ustalenia + kto co robi" },
+  { key: "ifthen", label: "„Jeśli–to” — plan na przeszkodę", type: "textarea", ph: "Jeśli [sytuacja], to [moje działanie]." },
+  { key: "clarity", label: "Jak jasne są dla Ciebie zadania i oczekiwania?", type: "range" }
+];

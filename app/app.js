@@ -9,7 +9,8 @@
     return {
       buddy: { match: null, sessions: {} },           // sessions: {1:{done,support,safety,note,date}}
       week: { pss: [], uwes: [], cbt: [], selfcomp: [] },
-      knowhow: { done: {}, checks: {} }               // done:{id:true}, checks:{id:{stepIdx:true}}
+      knowhow: { done: {}, checks: {} },              // done:{id:true}, checks:{id:{stepIdx:true}}
+      expect: { canvas: null, checkins: [] }          // canvas:{role,priorities,success,updated}
     };
   }
   function load() {
@@ -20,13 +21,15 @@
 
   var state = load() || defaultState();
   if (!state.knowhow) state.knowhow = { done: {}, checks: {} };   // migracja starszych zapisów
+  if (!state.expect) state.expect = { canvas: null, checkins: [] };
 
   /* ---------- stan ulotny (UI) ---------- */
   var ui = {
     startedQuiz: false, buddyStep: 0, buddyAnswers: {},
     openSession: null, sessErr: null,
     week: { mode: "home", answers: {}, lastTool: null },
-    knowhow: { openId: null, quiz: null }
+    knowhow: { openId: null, quiz: null },
+    expect: { mode: "home" }
   };
 
   /* ---------- pomocnicze ---------- */
@@ -90,7 +93,8 @@
       { done: !!(ss[2] && ss[2].done), label: "Sesja 2 — Rozkład jazdy", route: "buddy" },
       { done: !!(ss[4] && ss[4].done), label: "Sesja 4 — Co dalej", route: "buddy" },
       { done: state.week.pss.length > 0, label: "Pierwszy check-in PSS-10", route: "week" },
-      { done: khDone > 0, label: "Pierwsza mikro-lekcja (Know-How)", route: "knowhow" }
+      { done: khDone > 0, label: "Pierwsza mikro-lekcja (Know-How)", route: "knowhow" },
+      { done: !!state.expect.canvas, label: "Wypełnij kanwę oczekiwań", route: "expectations" }
     ];
     var doneCount = steps.filter(function (s) { return s.done; }).length;
     var pct = Math.round(doneCount / steps.length * 100);
@@ -121,7 +125,7 @@
         '<a class="tile" href="#buddy"><div class="tile-ico">🧑‍🤝‍🧑</div><div class="tile-name">Buddy Match</div><div class="tile-desc">' +
           (m ? "Twój buddy: " + esc(buddy.name) : "Dobierz mentora i ucz się od kogoś bliskiego") + "</div></a>" +
         '<a class="tile" href="#knowhow"><div class="tile-ico">📚</div><div class="tile-name">Know-How na teraz</div><div class="tile-desc">' + (khDone ? khDone + " z " + LESSONS.length + " mikro-lekcji" : "Wiedza w małych porcjach, gdy jej potrzebujesz") + "</div></a>" +
-        '<a class="tile soon" href="#expectations"><div class="tile-ico">🎯</div><div class="tile-name">Jasne Oczekiwania</div><div class="tile-desc">Check-in z przełożonym i jasność zadań</div><span class="soon-tag">Wkrótce</span></a>' +
+        '<a class="tile" href="#expectations"><div class="tile-ico">🎯</div><div class="tile-name">Jasne Oczekiwania</div><div class="tile-desc">' + (state.expect.canvas ? state.expect.checkins.length + " check-in(ów)" : "Kanwa oczekiwań i check-in z przełożonym") + "</div></a>" +
         '<a class="tile" href="#week"><div class="tile-ico">💚</div><div class="tile-name">Twój tydzień</div><div class="tile-desc">Krótki pomiar stresu i zaangażowania</div></a>' +
       "</div></div>";
   }
@@ -227,6 +231,78 @@
       p.bullets.map(function (b) { return "<li>" + esc(b) + "</li>"; }).join("") + "</ul></div>" +
       whyBox({ title: "Podstawa psychologiczna", body: esc(p.theory), cite: "" }) +
       '<a class="btn btn-secondary btn-block" href="#start">← Wróć na start</a></div>';
+  }
+
+  /* ---------- widok: JASNE OCZEKIWANIA ---------- */
+  function valOf(id) { var el = document.getElementById(id); return el ? el.value.trim() : ""; }
+  function exErr(m) { var e = document.getElementById("exErr"); if (e) e.textContent = m; }
+  function clarityBand(v) { return v >= 75 ? { label: "wysoka", cls: "low" } : v >= 50 ? { label: "średnia", cls: "mid" } : { label: "niska", cls: "high" }; }
+  function prefField(prefix, f, val) {
+    var id = prefix + "-" + f.key;
+    if (f.type === "range") {
+      var v = (val == null ? 50 : val);
+      return '<div class="field"><label>' + esc(f.label) + ': <span id="val-' + id + '">' + v + "</span>/100</label>" +
+        '<input type="range" min="0" max="100" value="' + v + '" id="' + id + '" data-act="range" data-target="val-' + id + '" style="width:100%"></div>';
+    }
+    return '<div class="field"><label>' + esc(f.label) + '</label><textarea id="' + id + '" placeholder="' + esc(f.ph || "") + '">' + esc(val || "") + "</textarea></div>";
+  }
+  function viewExpect() {
+    if (ui.expect.mode === "canvas") return expectCanvasView();
+    if (ui.expect.mode === "checkin") return expectCheckinView();
+    return expectHome();
+  }
+  function expectHome() {
+    var c = state.expect.canvas, ch = state.expect.checkins;
+    var lastC = ch.length ? ch[ch.length - 1] : null;
+    var clarityArr = ch.map(function (e) { return { score: e.clarity, date: e.date }; });
+    return '<div class="screen">' +
+      '<div class="hero"><div class="hero-eyebrow">Moduł 3</div><h1 class="hero-title">🎯 Jasne Oczekiwania</h1>' +
+      '<p class="hero-sub">Zamień mgłę w konkrety: ustal oczekiwania i prowadź 15-minutowe check-iny z przełożonym.</p></div>' +
+      whyBox(EXPECT_THEORY) +
+      (c ?
+        '<div class="card"><div class="card-title">🧭 Kanwa oczekiwań</div>' +
+          '<p style="margin:.2em 0;font-size:14px"><b>Rola:</b> ' + esc(c.role) + "</p>" +
+          (c.priorities ? '<p style="margin:.2em 0;font-size:14px"><b>Priorytety:</b> ' + esc(c.priorities) + "</p>" : "") +
+          (c.success ? '<p style="margin:.2em 0;font-size:14px"><b>Sukces:</b> ' + esc(c.success) + "</p>" : "") +
+          '<button class="btn btn-secondary btn-sm" data-act="ex-canvas" style="margin-top:8px">Edytuj kanwę</button></div>'
+        : '<div class="card" style="border:1.5px solid var(--primary)"><div class="card-title">🧭 Zacznij od kanwy oczekiwań</div>' +
+          '<p class="card-sub" style="margin:0 0 10px">Nazwij swoją rolę, priorytety i kryteria sukcesu — to fundament jasności.</p>' +
+          '<button class="btn btn-primary btn-block" data-act="ex-canvas">Wypełnij kanwę →</button></div>') +
+      '<div class="card"><div class="card-title">📊 Jasność zadań (0–100)</div>' +
+        (lastC ? resultRow({ score: lastC.clarity, label: clarityBand(lastC.clarity).label, cls: clarityBand(lastC.clarity).cls }, "/100") + trendBars(clarityArr, 100, "accent")
+               : '<p class="card-sub" style="margin:0">Zrób pierwszy check-in, aby zmierzyć jasność.</p>') + "</div>" +
+      '<div class="card"><div class="card-title">📋 Weekly 15 — check-in z przełożonym</div>' +
+        '<p class="card-sub">Struktura: co działa / co blokuje / co konkretnie zrobimy.</p>' +
+        '<button class="btn btn-primary btn-block" data-act="ex-checkin">Nowy check-in →</button></div>' +
+      (ch.length ? '<div class="section-label">Historia check-inów</div>' + ch.slice().reverse().slice(0, 6).map(function (e) {
+        var b = clarityBand(e.clarity);
+        return '<div class="card tight"><div class="list-meta"><span class="pill">' + fmtDate(e.date) + '</span><span class="badge badge-' + b.cls + '">jasność ' + e.clarity + "/100</span></div>" +
+          (e.next ? '<p style="font-size:14px;margin:8px 0 0"><b>Następny krok:</b> ' + esc(e.next) + "</p>" : "") +
+          (e.ifthen ? '<p style="font-size:13px;color:var(--muted);margin:6px 0 0">' + esc(e.ifthen) + "</p>" : "") + "</div>";
+      }).join("") : "") +
+      "</div>";
+  }
+  function expectCanvasView() {
+    var c = state.expect.canvas || {};
+    return '<div class="screen">' +
+      '<button class="btn btn-ghost btn-sm" data-act="ex-home">← Wróć</button>' +
+      '<div class="hero" style="margin-top:10px"><h1 class="hero-title" style="font-size:24px">🧭 Kanwa oczekiwań</h1>' +
+      '<p class="hero-sub">Uzupełnij raz na start, wracaj i aktualizuj.</p></div>' +
+      '<div class="card">' + CANVAS_FORM.map(function (f) { return prefField("canvas", f, c[f.key]); }).join("") +
+      '<p id="exErr" style="color:var(--danger);font-size:13px;min-height:18px;margin:0"></p>' +
+      '<div class="btn-row"><button class="btn btn-primary" data-act="ex-canvas-save">Zapisz kanwę</button>' +
+      '<button class="btn btn-ghost" data-act="ex-home">Anuluj</button></div></div></div>';
+  }
+  function expectCheckinView() {
+    return '<div class="screen">' +
+      '<button class="btn btn-ghost btn-sm" data-act="ex-home">← Wróć</button>' +
+      '<div class="hero" style="margin-top:10px"><h1 class="hero-title" style="font-size:24px">📋 Weekly 15 — check-in</h1>' +
+      '<p class="hero-sub">15-minutowy, ustrukturyzowany check-in. Wypełnij przed rozmową lub w jej trakcie.</p></div>' +
+      whyBox(EXPECT_THEORY) +
+      '<div class="card">' + CHECKIN_FORM.map(function (f) { return prefField("checkin", f, f.type === "range" ? null : ""); }).join("") +
+      '<p id="exErr" style="color:var(--danger);font-size:13px;min-height:18px;margin:0"></p>' +
+      '<div class="btn-row"><button class="btn btn-primary" data-act="ex-checkin-save">Zapisz check-in</button>' +
+      '<button class="btn btn-ghost" data-act="ex-home">Anuluj</button></div></div></div>';
   }
 
   /* ---------- widok: KNOW-HOW NA TERAZ ---------- */
@@ -419,7 +495,7 @@
     var r = currentRoute(), html;
     if (r === "buddy") html = viewBuddy();
     else if (r === "knowhow") html = viewKnowhow();
-    else if (r === "expectations") html = viewPreview(EXPECT_PREVIEW);
+    else if (r === "expectations") html = viewExpect();
     else if (r === "week") html = viewWeek();
     else html = viewStart();
     var view = document.getElementById("view");
@@ -495,6 +571,22 @@
       if (correct) { state.knowhow.done[d.id] = true; save(); }
       render();
     }
+    else if (act === "ex-canvas") { ui.expect.mode = "canvas"; render(); }
+    else if (act === "ex-checkin") { ui.expect.mode = "checkin"; render(); }
+    else if (act === "ex-home") { ui.expect.mode = "home"; render(); }
+    else if (act === "ex-canvas-save") {
+      var role = valOf("canvas-role");
+      if (!role) { exErr("Wpisz przynajmniej swoją rolę."); return; }
+      state.expect.canvas = { role: role, priorities: valOf("canvas-priorities"), success: valOf("canvas-success"), updated: Date.now() };
+      save(); ui.expect.mode = "home"; render();
+    }
+    else if (act === "ex-checkin-save") {
+      var works = valOf("checkin-works"), nxt = valOf("checkin-next");
+      if (!works && !nxt) { exErr("Uzupełnij choć jedno pole (np. „co zrobimy”)."); return; }
+      var cl = document.getElementById("checkin-clarity");
+      state.expect.checkins.push({ date: Date.now(), works: works, blocks: valOf("checkin-blocks"), next: nxt, ifthen: valOf("checkin-ifthen"), clarity: cl ? +cl.value : 50 });
+      save(); ui.expect.mode = "home"; render();
+    }
   }
   function onChange(e) {
     var t = e.target;
@@ -534,6 +626,7 @@
     ui.openSession = null; ui.sessErr = null;
     ui.week = { mode: "home", answers: {}, lastTool: null };
     ui.knowhow = { openId: null, quiz: null };
+    ui.expect = { mode: "home" };
   }
 
   /* ---------- init ---------- */
