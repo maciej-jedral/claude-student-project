@@ -48,7 +48,7 @@
     return bands[bands.length - 1];
   }
   function whyBox(o) {
-    return '<div class="why"><div class="why-title">💡 ' + esc(o.title) + "</div><p>" + o.body + "</p>" +
+    return '<div class="why"><div class="why-title">' + ic("bulb") + ' ' + esc(o.title) + "</div><p>" + o.body + "</p>" +
       (o.cite ? '<cite style="font-size:12px;display:block;margin-top:6px">' + esc(o.cite) + "</cite>" : "") + "</div>";
   }
 
@@ -102,31 +102,31 @@
 
     return '<div class="screen">' +
       '<div class="hero"><div class="hero-eyebrow">Buddy app</div>' +
-      '<h1 class="hero-title">Cześć! 👋</h1>' +
+      '<h1 class="hero-title">Cześć!</h1>' +
       '<p class="hero-sub">Przeprowadzimy Cię przez pierwsze tygodnie w nowej pracy — krok po kroku, bez przeciążenia.</p></div>' +
 
-      '<div class="card"><div class="card-title">📈 Twój postęp pierwszych tygodni</div>' +
+      '<div class="card"><div class="card-title">' + ic("chart") + ' Twój postęp pierwszych tygodni</div>' +
       '<div class="progress"><i style="width:' + pct + '%"></i></div>' +
       '<div class="progress-label">' + doneCount + " z " + steps.length + " kroków • " + pct + "%</div>" +
       '<ul style="list-style:none;padding:0;margin:12px 0 0;display:flex;flex-direction:column;gap:8px">' +
       steps.map(function (s) {
         return '<li style="' + (s.done ? "" : "opacity:.6") + '"><a href="#' + s.route +
-          '" style="text-decoration:none;color:inherit">' + (s.done ? "✅" : "⬜") + " " + esc(s.label) + "</a></li>";
+          '" style="text-decoration:none;color:inherit">' + (s.done ? ic("check-circle") : ic("circle")) + " " + esc(s.label) + "</a></li>";
       }).join("") + "</ul></div>" +
 
       ((lastP || lastU) ?
-        '<div class="card"><div class="card-title">💚 Ostatni pomiar</div>' +
+        '<div class="card"><div class="card-title">' + ic("heart") + ' Ostatni pomiar</div>' +
         (lastP ? '<div class="list-meta" style="margin:4px 0"><span>Stres (PSS-10)</span><span><b>' + lastP.score + "/40</b> &nbsp;<span class=\"badge badge-" + lastP.cls + '">' + esc(lastP.label) + "</span></span></div>" : "") +
         (lastU ? '<div class="list-meta" style="margin:4px 0"><span>Zaangażowanie (UWES-9)</span><span><b>' + lastU.score + "/6</b> &nbsp;<span class=\"badge badge-" + lastU.cls + '">' + esc(lastU.label) + "</span></span></div>" : "") +
         "</div>" : "") +
 
       '<div class="section-label">Moduły</div>' +
       '<div class="tile-grid">' +
-        '<a class="tile" href="#buddy"><div class="tile-ico">🧑‍🤝‍🧑</div><div class="tile-name">Buddy Match</div><div class="tile-desc">' +
+        '<a class="tile" href="#buddy"><div class="tile-ico">' + ic("users") + '</div><div class="tile-name">Buddy Match</div><div class="tile-desc">' +
           (m ? "Twój buddy: " + esc(buddy.name) : "Dobierz mentora i ucz się od kogoś bliskiego") + "</div></a>" +
-        '<a class="tile" href="#knowhow"><div class="tile-ico">📚</div><div class="tile-name">Know-How na teraz</div><div class="tile-desc">' + (khDone ? khDone + " z " + LESSONS.length + " mikro-lekcji" : "Wiedza w małych porcjach, gdy jej potrzebujesz") + "</div></a>" +
-        '<a class="tile" href="#expectations"><div class="tile-ico">🎯</div><div class="tile-name">Jasne Oczekiwania</div><div class="tile-desc">' + (state.expect.canvas ? state.expect.checkins.length + " check-in(ów)" : "Kanwa oczekiwań i check-in z przełożonym") + "</div></a>" +
-        '<a class="tile" href="#week"><div class="tile-ico">💚</div><div class="tile-name">Twój tydzień</div><div class="tile-desc">Krótki pomiar stresu i zaangażowania</div></a>' +
+        '<a class="tile" href="#knowhow"><div class="tile-ico">' + ic("book") + '</div><div class="tile-name">Know-How na teraz</div><div class="tile-desc">' + (khDone ? khDone + " z " + LESSONS.length + " mikro-lekcji" : "Wiedza w małych porcjach, gdy jej potrzebujesz") + "</div></a>" +
+        '<a class="tile" href="#expectations"><div class="tile-ico">' + ic("target") + '</div><div class="tile-name">Jasne Oczekiwania</div><div class="tile-desc">' + (state.expect.canvas ? state.expect.checkins.length + " check-in(ów)" : "Kanwa oczekiwań i check-in z przełożonym") + "</div></a>" +
+        '<a class="tile" href="#week"><div class="tile-ico">' + ic("heart") + '</div><div class="tile-name">Twój tydzień</div><div class="tile-desc">Krótki pomiar stresu i zaangażowania</div></a>' +
       "</div></div>";
   }
 
@@ -138,7 +138,7 @@
   }
   function buddyIntroView() {
     return '<div class="screen">' +
-      '<div class="hero"><div class="hero-eyebrow">Moduł 1</div><h1 class="hero-title">🧑‍🤝‍🧑 Buddy Match</h1>' +
+      '<div class="hero"><div class="hero-eyebrow">Moduł 1</div><h1 class="hero-title">' + ic("users") + ' Buddy Match</h1>' +
       "<p class=\"hero-sub\">Dobierzemy Ci <b>buddy'ego</b> (kolega 1–2 lata stażu) i <b>seniora-eksperta</b>, a potem przeprowadzimy Was przez 3 krótkie sesje 1:1.</p></div>" +
       whyBox(THEORY.buddy) +
       '<div class="card"><div class="card-title">Jak to działa</div>' +
@@ -156,7 +156,7 @@
       '<div class="choice-list">' +
       q.options.map(function (o, i) {
         return '<button class="choice ' + (chosen === i ? "selected" : "") + '" data-act="answer" data-q="' + q.id + '" data-i="' + i + '">' +
-          '<span class="c-emoji">' + o.emoji + "</span><span>" + esc(o.label) + '</span><span class="dot" style="margin-left:auto"></span></button>';
+          "<span>" + esc(o.label) + '</span><span class="dot" style="margin-left:auto"></span></button>';
       }).join("") + "</div>" +
       '<div class="btn-row">' + (step > 0 ? '<button class="btn btn-ghost" data-act="quiz-back">← Wstecz</button>' : "") + "</div></div>";
   }
@@ -165,17 +165,17 @@
     var b = BUDDIES.filter(function (x) { return x.id === m.buddyId; })[0];
     var s = SENIORS[m.area] || SENIORS.product;
     return '<div class="screen">' +
-      '<div class="hero"><div class="hero-eyebrow">Moduł 1 · Buddy Match</div><h1 class="hero-title">Twoje dopasowanie 🎉</h1>' +
+      '<div class="hero"><div class="hero-eyebrow">Moduł 1 · Buddy Match</div><h1 class="hero-title">Twoje dopasowanie ' + ic("sparkle") + '</h1>' +
       '<p class="hero-sub">Oto osoby, które przeprowadzą Cię przez start. Umów się na sesje wg planu poniżej.</p></div>' +
 
-      '<div class="card"><div class="match-card"><div class="avatar">' + b.emoji + "</div>" +
+      '<div class="card"><div class="match-card"><div class="avatar"><span>' + esc(b.name.charAt(0)) + "</span></div>" +
       '<div class="match-meta"><div class="match-name">' + esc(b.name) + ' <span class="pill">buddy</span></div>' +
       '<div class="match-role">' + esc(b.role) + " • " + b.years + " roku stażu</div>" +
       '<p style="margin:8px 0 0;font-size:14px">' + esc(b.blurb) + "</p>" +
       (m.reasons.length ? '<ul class="reasons">' + m.reasons.map(function (t) { return "<li>" + esc(TAG_LABELS[t] || t) + "</li>"; }).join("") + "</ul>" : "") +
       "</div></div>" +
       '<hr class="divider">' +
-      '<div class="match-card"><div class="avatar senior">' + s.emoji + "</div>" +
+      '<div class="match-card"><div class="avatar senior"><span>' + esc(s.name.charAt(0)) + "</span></div>" +
       '<div class="match-meta"><div class="match-name">' + esc(s.name) + ' <span class="pill">senior-ekspert</span></div>' +
       '<div class="match-role">' + esc(s.role) + "</div>" +
       '<p style="margin:8px 0 0;font-size:14px">Pomoże Ci w temacie: ' + esc(s.expertise) + ".</p></div></div></div>" +
@@ -209,7 +209,7 @@
     var body =
       '<div class="session-goal">' + esc(se.goal) + "</div>" +
       '<div><b style="font-size:13px">Agenda</b><ul class="agenda">' + se.agenda.map(function (a) { return "<li>" + esc(a) + "</li>"; }).join("") + "</ul></div>" +
-      '<div><b style="font-size:13px">Pytania „secure base”</b>' + se.secureBase.map(function (q) { return '<div class="sb-q">💬 ' + esc(q) + "</div>"; }).join("") + "</div>";
+      '<div><b style="font-size:13px">Pytania „secure base”</b>' + se.secureBase.map(function (q) { return '<div class="sb-q">' + ic("chat") + ' ' + esc(q) + "</div>"; }).join("") + "</div>";
     var foot;
     if (open) foot = sessionForm(se, saved);
     else if (done) foot = '<div class="list-meta" style="margin-top:10px"><span>Wsparcie: ' + saved.support + "/5 • Bezpieczeństwo: " + saved.safety + "/5</span>" +
@@ -256,22 +256,22 @@
     var lastC = ch.length ? ch[ch.length - 1] : null;
     var clarityArr = ch.map(function (e) { return { score: e.clarity, date: e.date }; });
     return '<div class="screen">' +
-      '<div class="hero"><div class="hero-eyebrow">Moduł 3</div><h1 class="hero-title">🎯 Jasne Oczekiwania</h1>' +
+      '<div class="hero"><div class="hero-eyebrow">Moduł 3</div><h1 class="hero-title">' + ic("target") + ' Jasne Oczekiwania</h1>' +
       '<p class="hero-sub">Zamień mgłę w konkrety: ustal oczekiwania i prowadź 15-minutowe check-iny z przełożonym.</p></div>' +
       whyBox(EXPECT_THEORY) +
       (c ?
-        '<div class="card"><div class="card-title">🧭 Kanwa oczekiwań</div>' +
+        '<div class="card"><div class="card-title">' + ic("compass") + ' Kanwa oczekiwań</div>' +
           '<p style="margin:.2em 0;font-size:14px"><b>Rola:</b> ' + esc(c.role) + "</p>" +
           (c.priorities ? '<p style="margin:.2em 0;font-size:14px"><b>Priorytety:</b> ' + esc(c.priorities) + "</p>" : "") +
           (c.success ? '<p style="margin:.2em 0;font-size:14px"><b>Sukces:</b> ' + esc(c.success) + "</p>" : "") +
           '<button class="btn btn-secondary btn-sm" data-act="ex-canvas" style="margin-top:8px">Edytuj kanwę</button></div>'
-        : '<div class="card" style="border:1.5px solid var(--primary)"><div class="card-title">🧭 Zacznij od kanwy oczekiwań</div>' +
+        : '<div class="card" style="border:1.5px solid var(--primary)"><div class="card-title">' + ic("compass") + ' Zacznij od kanwy oczekiwań</div>' +
           '<p class="card-sub" style="margin:0 0 10px">Nazwij swoją rolę, priorytety i kryteria sukcesu — to fundament jasności.</p>' +
           '<button class="btn btn-primary btn-block" data-act="ex-canvas">Wypełnij kanwę →</button></div>') +
-      '<div class="card"><div class="card-title">📊 Jasność zadań (0–100)</div>' +
+      '<div class="card"><div class="card-title">' + ic("barchart") + ' Jasność zadań (0–100)</div>' +
         (lastC ? resultRow({ score: lastC.clarity, label: clarityBand(lastC.clarity).label, cls: clarityBand(lastC.clarity).cls }, "/100") + trendBars(clarityArr, 100, "accent")
                : '<p class="card-sub" style="margin:0">Zrób pierwszy check-in, aby zmierzyć jasność.</p>') + "</div>" +
-      '<div class="card"><div class="card-title">📋 Weekly 15 — check-in z przełożonym</div>' +
+      '<div class="card"><div class="card-title">' + ic("clipboard") + ' Weekly 15 — check-in z przełożonym</div>' +
         '<p class="card-sub">Struktura: co działa / co blokuje / co konkretnie zrobimy.</p>' +
         '<button class="btn btn-primary btn-block" data-act="ex-checkin">Nowy check-in →</button></div>' +
       (ch.length ? '<div class="section-label">Historia check-inów</div>' + ch.slice().reverse().slice(0, 6).map(function (e) {
@@ -286,7 +286,7 @@
     var c = state.expect.canvas || {};
     return '<div class="screen">' +
       '<button class="btn btn-ghost btn-sm" data-act="ex-home">← Wróć</button>' +
-      '<div class="hero" style="margin-top:10px"><h1 class="hero-title" style="font-size:24px">🧭 Kanwa oczekiwań</h1>' +
+      '<div class="hero" style="margin-top:10px"><h1 class="hero-title" style="font-size:24px">' + ic("compass") + ' Kanwa oczekiwań</h1>' +
       '<p class="hero-sub">Uzupełnij raz na start, wracaj i aktualizuj.</p></div>' +
       '<div class="card">' + CANVAS_FORM.map(function (f) { return prefField("canvas", f, c[f.key]); }).join("") +
       '<p id="exErr" style="color:var(--danger);font-size:13px;min-height:18px;margin:0"></p>' +
@@ -296,7 +296,7 @@
   function expectCheckinView() {
     return '<div class="screen">' +
       '<button class="btn btn-ghost btn-sm" data-act="ex-home">← Wróć</button>' +
-      '<div class="hero" style="margin-top:10px"><h1 class="hero-title" style="font-size:24px">📋 Weekly 15 — check-in</h1>' +
+      '<div class="hero" style="margin-top:10px"><h1 class="hero-title" style="font-size:24px">' + ic("clipboard") + ' Weekly 15 — check-in</h1>' +
       '<p class="hero-sub">15-minutowy, ustrukturyzowany check-in. Wypełnij przed rozmową lub w jej trakcie.</p></div>' +
       whyBox(EXPECT_THEORY) +
       '<div class="card">' + CHECKIN_FORM.map(function (f) { return prefField("checkin", f, f.type === "range" ? null : ""); }).join("") +
@@ -314,7 +314,7 @@
     var done = state.knowhow.done[l.id];
     var s = (l.title + " " + l.category + " " + l.task).toLowerCase();
     return '<button class="kh-item session" data-act="kh-open" data-id="' + l.id + '" data-search="' + esc(s) + '" style="cursor:pointer;text-align:left;width:100%;font:inherit;display:block">' +
-      '<div class="session-head"><div><span style="font-size:18px">' + l.icon + '</span> <span class="session-week">' + esc(l.title) + "</span></div>" +
+      '<div class="session-head"><div><span class="li-ico">' + ic(l.icon) + '</span> <span class="session-week">' + esc(l.title) + "</span></div>" +
       (done ? '<span class="badge badge-low">✓ zaliczone</span>' : '<span class="pill">' + l.time + " min</span>") + "</div>" +
       '<div style="margin-top:6px"><span class="chip">' + esc(l.category) + "</span>" + (l.top10 ? ' <span class="chip accent">TOP 10</span>' : "") + "</div></button>";
   }
@@ -324,14 +324,14 @@
     var pct = Math.round(doneCount / total * 100);
     var next = LESSONS.filter(function (l) { return !state.knowhow.done[l.id]; })[0];
     return '<div class="screen">' +
-      '<div class="hero"><div class="hero-eyebrow">Moduł 2</div><h1 class="hero-title">📚 Know-How na teraz</h1>' +
+      '<div class="hero"><div class="hero-eyebrow">Moduł 2</div><h1 class="hero-title">' + ic("book") + ' Know-How na teraz</h1>' +
       '<p class="hero-sub">Wiedza w małych porcjach — dokładnie wtedy, gdy masz realne zadanie. Bez całodniowych szkoleń.</p></div>' +
       whyBox(KH_THEORY) +
       (next ?
-        '<div class="card" style="border:1.5px solid var(--primary)"><div class="card-title">✨ 1 rzecz na dziś</div>' +
+        '<div class="card" style="border:1.5px solid var(--primary)"><div class="card-title">' + ic("sparkle") + ' 1 rzecz na dziś</div>' +
         '<p class="card-sub" style="margin:0 0 10px">' + esc(next.task) + "</p>" +
         '<button class="btn btn-primary btn-block" data-act="kh-open" data-id="' + next.id + '">' + esc(next.title) + " • " + next.time + " min →</button></div>"
-        : '<div class="card"><div class="card-title">🎉 Wszystkie mikro-lekcje ukończone!</div><p class="card-sub" style="margin:0">Świetna robota. Wróć tu, gdy pojawi się nowe zadanie.</p></div>') +
+        : '<div class="card"><div class="card-title">' + ic("sparkle") + ' Wszystkie mikro-lekcje ukończone!</div><p class="card-sub" style="margin:0">Świetna robota. Wróć tu, gdy pojawi się nowe zadanie.</p></div>') +
       '<div class="card"><div class="card-title">Postęp nauki</div><div class="progress"><i style="width:' + pct + '%"></i></div>' +
       '<div class="progress-label">' + doneCount + " z " + total + " mikro-lekcji • " + pct + "%</div></div>" +
       '<div class="section-label">Baza wiedzy i mikro-lekcje</div>' +
@@ -353,7 +353,7 @@
     var quizHtml;
     if (qs && qs.answered) {
       quizHtml = '<div class="why" style="border-left-color:' + (qs.correct ? "var(--ok)" : "var(--danger)") + '">' +
-        '<p style="margin:0;font-weight:700">' + (qs.correct ? "✅ Dobrze!" : "❌ Niezupełnie") + "</p>" +
+        '<p style="margin:0;font-weight:700">' + (qs.correct ? ic("check-circle") + " Dobrze!" : ic("x-circle") + " Niezupełnie") + "</p>" +
         '<p style="margin:6px 0 0;font-size:14px">Poprawna odpowiedź: <b>' + esc(q.options[q.correct]) + "</b></p>" +
         (qs.correct ? "" : '<button class="btn btn-secondary btn-sm" data-act="kh-retry" data-id="' + l.id + '" style="margin-top:10px">Spróbuj ponownie</button>') + "</div>";
     } else {
@@ -363,11 +363,11 @@
     }
     return '<div class="screen">' +
       '<button class="btn btn-ghost btn-sm" data-act="kh-back">← Wszystkie lekcje</button>' +
-      '<div class="hero" style="margin-top:10px"><h1 class="hero-title" style="font-size:23px">' + l.icon + " " + esc(l.title) + "</h1>" +
+      '<div class="hero" style="margin-top:10px"><h1 class="hero-title" style="font-size:23px">' + ic(l.icon) + " " + esc(l.title) + "</h1>" +
       '<p class="hero-sub"><span class="chip">' + esc(l.category) + '</span> <span class="pill">' + l.time + " min</span>" + (done ? ' <span class="badge badge-low">✓ zaliczone</span>' : "") + "</p></div>" +
-      '<div class="why"><div class="why-title">⏱️ Dlaczego teraz</div><p>' + esc(l.task) + " Ucz się tej jednej rzeczy w kontekście realnego zadania — to odciąża pamięć roboczą.</p></div>" +
+      '<div class="why"><div class="why-title">' + ic("clock") + ' Dlaczego teraz</div><p>' + esc(l.task) + " Ucz się tej jednej rzeczy w kontekście realnego zadania — to odciąża pamięć roboczą.</p></div>" +
       '<div class="card"><div class="card-title">Kroki</div>' + stepsHtml + "</div>" +
-      '<div class="card"><div class="card-title">🧠 Sprawdź się</div><p class="card-sub" style="margin:0 0 10px">' + esc(q.q) + "</p>" + quizHtml + "</div></div>";
+      '<div class="card"><div class="card-title">' + ic("feather") + ' Sprawdź się</div><p class="card-sub" style="margin:0 0 10px">' + esc(q.q) + "</p>" + quizHtml + "</div></div>";
   }
 
   /* ---------- widok: TYDZIEŃ ---------- */
@@ -375,8 +375,8 @@
     var mode = ui.week.mode;
     if (mode === "pss") return weekScaleView("pss", PSS10);
     if (mode === "uwes") return weekScaleView("uwes", UWES9);
-    if (mode === "cbt") return weekFormView("cbt", CBT_FORM, THEORY.cbt, "🧠 Zapis myśli (CBT)");
-    if (mode === "selfcomp") return weekFormView("selfcomp", SELFCOMP_FORM, THEORY.selfcomp, "💗 Chwila życzliwości dla siebie");
+    if (mode === "cbt") return weekFormView("cbt", CBT_FORM, THEORY.cbt, "Zapis myśli (CBT)", "feather");
+    if (mode === "selfcomp") return weekFormView("selfcomp", SELFCOMP_FORM, THEORY.selfcomp, "Chwila życzliwości dla siebie", "heart");
     if (mode === "result") return weekResultView();
     return weekHome();
   }
@@ -395,20 +395,20 @@
   function weekHome() {
     var lastP = last(state.week.pss), lastU = last(state.week.uwes);
     return '<div class="screen">' +
-      '<div class="hero"><div class="hero-eyebrow">Twój tydzień</div><h1 class="hero-title">💚 Jak się masz?</h1>' +
+      '<div class="hero"><div class="hero-eyebrow">Twój tydzień</div><h1 class="hero-title">' + ic("heart") + ' Jak się masz?</h1>' +
       '<p class="hero-sub">Krótkie, regularne pomiary i ćwiczenia. To Twoje prywatne dane — zapisane lokalnie w przeglądarce.</p></div>' +
 
-      '<div class="card"><div class="card-title">🌡️ PSS-10 — poziom stresu</div><p class="card-sub">10 pytań • ~2 min</p>' +
+      '<div class="card"><div class="card-title">' + ic("pulse") + ' PSS-10 — poziom stresu</div><p class="card-sub">10 pytań • ~2 min</p>' +
       (lastP ? resultRow(lastP, "/40") + trendBars(state.week.pss, 40, "") : '<p class="card-sub" style="margin:0">Jeszcze nie wypełniono.</p>') +
       '<button class="btn btn-primary btn-block" data-act="week-open" data-tool="pss" style="margin-top:12px">' + (lastP ? "Wypełnij ponownie" : "Wypełnij PSS-10") + "</button></div>" +
 
-      '<div class="card"><div class="card-title">🔥 UWES-9 — zaangażowanie</div><p class="card-sub">9 pytań • ~2 min</p>' +
+      '<div class="card"><div class="card-title">' + ic("flame") + ' UWES-9 — zaangażowanie</div><p class="card-sub">9 pytań • ~2 min</p>' +
       (lastU ? resultRow(lastU, "/6") + trendBars(state.week.uwes, 6, "accent") : '<p class="card-sub" style="margin:0">Jeszcze nie wypełniono.</p>') +
       '<button class="btn btn-primary btn-block" data-act="week-open" data-tool="uwes" style="margin-top:12px">' + (lastU ? "Wypełnij ponownie" : "Wypełnij UWES-9") + "</button></div>" +
 
       '<div class="section-label">Ćwiczenia</div><div class="tile-grid">' +
-      '<button class="tile" data-act="week-open" data-tool="cbt" style="cursor:pointer;font:inherit"><div class="tile-ico">🧠</div><div class="tile-name">Zapis myśli (CBT)</div><div class="tile-desc">Sprawdź stresującą myśl z faktami • ' + state.week.cbt.length + " wpis(ów)</div></button>" +
-      '<button class="tile" data-act="week-open" data-tool="selfcomp" style="cursor:pointer;font:inherit"><div class="tile-ico">💗</div><div class="tile-name">Życzliwość dla siebie</div><div class="tile-desc">3 kroki self-compassion • ' + state.week.selfcomp.length + " wpis(ów)</div></button>" +
+      '<button class="tile" data-act="week-open" data-tool="cbt" style="cursor:pointer;font:inherit"><div class="tile-ico">' + ic("feather") + '</div><div class="tile-name">Zapis myśli (CBT)</div><div class="tile-desc">Sprawdź stresującą myśl z faktami • ' + state.week.cbt.length + " wpis(ów)</div></button>" +
+      '<button class="tile" data-act="week-open" data-tool="selfcomp" style="cursor:pointer;font:inherit"><div class="tile-ico">' + ic("heart") + '</div><div class="tile-name">Życzliwość dla siebie</div><div class="tile-desc">3 kroki self-compassion • ' + state.week.selfcomp.length + " wpis(ów)</div></button>" +
       "</div></div>";
   }
   function likertItem(tool, i, it, scale, val) {
@@ -474,9 +474,9 @@
         '<p style="font-size:14px;margin:8px 0 0">' + esc(snip) + "</p></div>";
     }).join("");
   }
-  function weekFormView(tool, form, theory, title) {
+  function weekFormView(tool, form, theory, title, icon) {
     return '<div class="screen">' +
-      '<div class="hero"><h1 class="hero-title">' + esc(title) + "</h1></div>" +
+      '<div class="hero"><h1 class="hero-title">' + ic(icon) + " " + esc(title) + "</h1></div>" +
       whyBox(theory) +
       '<div class="card">' + form.map(function (f) { return formField(tool, f); }).join("") +
       '<p class="err" id="weekErr" style="color:var(--danger);font-size:13px;min-height:18px"></p>' +

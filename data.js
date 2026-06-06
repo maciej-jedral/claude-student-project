@@ -287,37 +287,37 @@ const KH_THEORY = {
 };
 
 const LESSONS = [
-  { id: "setup", icon: "🔐", title: "Konfiguracja konta i logowanie (2FA)", time: 5, category: "Narzędzia", top10: true,
+  { id: "setup", icon: "lock", title: "Konfiguracja konta i logowanie (2FA)", time: 5, category: "Narzędzia", top10: true,
     task: "Mam dziś skonfigurować konto i bezpiecznie się logować.",
     steps: ["Ustaw silne, unikalne hasło do konta firmowego", "Włącz uwierzytelnianie dwuskładnikowe (2FA) w aplikacji authenticator", "Zapisz kody zapasowe w bezpiecznym miejscu", "Zaloguj się do poczty i komunikatora, sprawdzając czy działają", "Nigdy nie podawaj kodu 2FA osobom trzecim"],
     quiz: { q: "Co najbardziej zwiększa bezpieczeństwo logowania?", options: ["Włączone 2FA", "To samo hasło wszędzie", "Hasło na kartce na biurku"], correct: 0 } },
 
-  { id: "access", icon: "🔑", title: "Jak poprosić o dostęp do systemu", time: 4, category: "Procedury", top10: true,
+  { id: "access", icon: "key", title: "Jak poprosić o dostęp do systemu", time: 4, category: "Procedury", top10: true,
     task: "Mam dziś zdobyć dostęp do firmowego systemu.",
     steps: ["Ustal, który system jest potrzebny do Twojego zadania", "Znajdź właściciela systemu (intranet lub buddy)", "Złóż wniosek w portalu IT w kategorii „Dostęp”", "Dodaj krótkie uzasadnienie biznesowe (1 zdanie)", "Poinformuj przełożonego, że czekasz na nadanie dostępu"],
     quiz: { q: "Czego najczęściej brakuje we wniosku o dostęp?", options: ["Uzasadnienia biznesowego", "Twojego imienia", "Daty urodzenia"], correct: 0 } },
 
-  { id: "leave", icon: "🌴", title: "Jak złożyć wniosek urlopowy", time: 3, category: "Procedury", top10: true,
+  { id: "leave", icon: "umbrella", title: "Jak złożyć wniosek urlopowy", time: 3, category: "Procedury", top10: true,
     task: "Chcę dziś zaplanować i złożyć wniosek o urlop.",
     steps: ["Sprawdź liczbę dostępnych dni w systemie kadrowym", "Uzgodnij termin z przełożonym i zespołem", "Złóż wniosek w systemie HR z wyprzedzeniem", "Sprawdź status wniosku (oczekuje / zaakceptowany)", "Ustaw odpowiedź automatyczną na czas nieobecności"],
     quiz: { q: "Co zrobić przed złożeniem wniosku o urlop?", options: ["Uzgodnić termin z przełożonym", "Nic — system zrobi wszystko", "Powiadomić klientów firmy"], correct: 0 } },
 
-  { id: "firsttask", icon: "🧩", title: "Pierwsze zadanie: rozbij je na kroki", time: 6, category: "Organizacja", top10: false,
+  { id: "firsttask", icon: "tasks", title: "Pierwsze zadanie: rozbij je na kroki", time: 6, category: "Organizacja", top10: false,
     task: "Dostał_em pierwsze zadanie i nie wiem, od czego zacząć.",
     steps: ["Zapisz cel zadania jednym zdaniem („gotowe, gdy…”)", "Podziel je na 3–5 mniejszych kroków", "Zaznacz, czego nie wiesz — to pytania do buddy'ego", "Zrób najmniejszy pierwszy krok już teraz", "Po każdym kroku odhacz postęp i zrób krótką przerwę"],
     quiz: { q: "Jak zmniejszyć przeciążenie przy nowym zadaniu?", options: ["Podzielić je na małe kroki", "Zrobić wszystko naraz wieczorem", "Odłożyć do terminu"], correct: 0 } },
 
-  { id: "chat", icon: "💬", title: "Komunikator firmowy — kanały i etykieta", time: 4, category: "Komunikacja", top10: false,
+  { id: "chat", icon: "chat", title: "Komunikator firmowy — kanały i etykieta", time: 4, category: "Komunikacja", top10: false,
     task: "Mam dziś zacząć korzystać z komunikatora w zespole.",
     steps: ["Dołącz do kanałów swojego zespołu i projektu", "Uzupełnij status i godziny pracy w profilu", "Pisz na kanale publicznym zamiast prywatnie — inni skorzystają", "Używaj wątków, by nie zaśmiecać kanału", "Pytania zadawaj konkretnie: cel + co już sprawdził_eś"],
     quiz: { q: "Gdzie najlepiej zadać pytanie o procedurę?", options: ["Na publicznym kanale zespołu", "W prywatnej wiadomości do prezesa", "Nigdzie — lepiej nie pytać"], correct: 0 } },
 
-  { id: "knowledge", icon: "🧭", title: "Gdzie szukać wiedzy, zanim zapytasz", time: 3, category: "Organizacja", top10: true,
+  { id: "knowledge", icon: "compass", title: "Gdzie szukać wiedzy, zanim zapytasz", time: 3, category: "Organizacja", top10: true,
     task: "Czegoś nie wiem i chcę najpierw poszukać sam_.",
     steps: ["Zajrzyj do bazy wiedzy / intranetu (wyszukiwarka)", "Sprawdź przypięte materiały na kanale zespołu", "Przejrzyj FAQ i instrukcje krok-po-kroku", "Jeśli nadal nie wiesz — sformułuj konkretne pytanie", "Zapytaj buddy'ego, dołączając co już sprawdził_eś"],
     quiz: { q: "Co zrobić tuż przed zadaniem pytania innym?", options: ["Sprawdzić bazę wiedzy i FAQ", "Zrestartować komputer", "Poczekać tydzień"], correct: 0 } },
 
-  { id: "time", icon: "⏰", title: "Ewidencja czasu pracy", time: 4, category: "Procedury", top10: false,
+  { id: "time", icon: "clock", title: "Ewidencja czasu pracy", time: 4, category: "Procedury", top10: false,
     task: "Mam dziś zaewidencjonować czas pracy.",
     steps: ["Otwórz system ewidencji czasu", "Wybierz właściwy projekt lub zadanie", "Wpisz godziny w odpowiednie dni", "Zapisz i sprawdź sumę tygodniową", "Zatwierdź wpis przed terminem rozliczenia"],
     quiz: { q: "Co zwykle trzeba wybrać przy wpisie czasu?", options: ["Projekt / zadanie", "Pogodę", "Ulubiony kolor"], correct: 0 } }
@@ -337,9 +337,9 @@ const CANVAS_FORM = [
 ];
 
 const CHECKIN_FORM = [
-  { key: "works", label: "✅ Co działa / co poszło dobrze", type: "textarea", ph: "Konkretne sytuacje z ostatniego tygodnia" },
-  { key: "blocks", label: "⛔ Co blokuje / czego nie wiem", type: "textarea", ph: "Przeszkody, niejasności, brakujące dostępy" },
-  { key: "next", label: "➡️ Co konkretnie zrobimy do następnego razu", type: "textarea", ph: "Ustalenia + kto co robi" },
+  { key: "works", label: "Co działa / co poszło dobrze", type: "textarea", ph: "Konkretne sytuacje z ostatniego tygodnia" },
+  { key: "blocks", label: "Co blokuje / czego nie wiem", type: "textarea", ph: "Przeszkody, niejasności, brakujące dostępy" },
+  { key: "next", label: "Co konkretnie zrobimy do następnego razu", type: "textarea", ph: "Ustalenia + kto co robi" },
   { key: "ifthen", label: "„Jeśli–to” — plan na przeszkodę", type: "textarea", ph: "Jeśli [sytuacja], to [moje działanie]." },
   { key: "clarity", label: "Jak jasne są dla Ciebie zadania i oczekiwania?", type: "range" }
 ];
