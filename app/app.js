@@ -8,7 +8,8 @@
   function defaultState() {
     return {
       buddy: { match: null, sessions: {} },           // sessions: {1:{done,support,safety,note,date}}
-      week: { pss: [], uwes: [], cbt: [], selfcomp: [] }
+      week: { pss: [], uwes: [], cbt: [], selfcomp: [] },
+      knowhow: { done: {}, checks: {} }               // done:{id:true}, checks:{id:{stepIdx:true}}
     };
   }
   function load() {
@@ -18,12 +19,14 @@
   function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
 
   var state = load() || defaultState();
+  if (!state.knowhow) state.knowhow = { done: {}, checks: {} };   // migracja starszych zapisów
 
   /* ---------- stan ulotny (UI) ---------- */
   var ui = {
     startedQuiz: false, buddyStep: 0, buddyAnswers: {},
     openSession: null, sessErr: null,
-    week: { mode: "home", answers: {}, lastTool: null }
+    week: { mode: "home", answers: {}, lastTool: null },
+    knowhow: { openId: null, quiz: null }
   };
 
   /* ---------- pomocnicze ---------- */
@@ -80,12 +83,14 @@
     var m = state.buddy.match;
     var buddy = m ? BUDDIES.filter(function (b) { return b.id === m.buddyId; })[0] : null;
     var ss = state.buddy.sessions;
+    var khDone = Object.keys(state.knowhow.done).length;
     var steps = [
       { done: !!m, label: "Dopasuj buddy'ego", route: "buddy" },
       { done: !!(ss[1] && ss[1].done), label: "Sesja 1 — Poznajmy się", route: "buddy" },
       { done: !!(ss[2] && ss[2].done), label: "Sesja 2 — Rozkład jazdy", route: "buddy" },
       { done: !!(ss[4] && ss[4].done), label: "Sesja 4 — Co dalej", route: "buddy" },
-      { done: state.week.pss.length > 0, label: "Pierwszy check-in PSS-10", route: "week" }
+      { done: state.week.pss.length > 0, label: "Pierwszy check-in PSS-10", route: "week" },
+      { done: khDone > 0, label: "Pierwsza mikro-lekcja (Know-How)", route: "knowhow" }
     ];
     var doneCount = steps.filter(function (s) { return s.done; }).length;
     var pct = Math.round(doneCount / steps.length * 100);
@@ -115,7 +120,7 @@
       '<div class="tile-grid">' +
         '<a class="tile" href="#buddy"><div class="tile-ico">🧑‍🤝‍🧑</div><div class="tile-name">Buddy Match</div><div class="tile-desc">' +
           (m ? "Twój buddy: " + esc(buddy.name) : "Dobierz mentora i ucz się od kogoś bliskiego") + "</div></a>" +
-        '<a class="tile soon" href="#knowhow"><div class="tile-ico">📚</div><div class="tile-name">Know-How na teraz</div><div class="tile-desc">Wiedza w małych porcjach, gdy jej potrzebujesz</div><span class="soon-tag">Wkrótce</span></a>' +
+        '<a class="tile" href="#knowhow"><div class="tile-ico">📚</div><div class="tile-name">Know-How na teraz</div><div class="tile-desc">' + (khDone ? khDone + " z " + LESSONS.length + " mikro-lekcji" : "Wiedza w małych porcjach, gdy jej potrzebujesz") + "</div></a>" +
         '<a class="tile soon" href="#expectations"><div class="tile-ico">🎯</div><div class="tile-name">Jasne Oczekiwania</div><div class="tile-desc">Check-in z przełożonym i jasność zadań</div><span class="soon-tag">Wkrótce</span></a>' +
         '<a class="tile" href="#week"><div class="tile-ico">💚</div><div class="tile-name">Twój tydzień</div><div class="tile-desc">Krótki pomiar stresu i zaangażowania</div></a>' +
       "</div></div>";
@@ -222,6 +227,71 @@
       p.bullets.map(function (b) { return "<li>" + esc(b) + "</li>"; }).join("") + "</ul></div>" +
       whyBox({ title: "Podstawa psychologiczna", body: esc(p.theory), cite: "" }) +
       '<a class="btn btn-secondary btn-block" href="#start">← Wróć na start</a></div>';
+  }
+
+  /* ---------- widok: KNOW-HOW NA TERAZ ---------- */
+  function viewKnowhow() {
+    if (ui.knowhow.openId) return knowhowLesson();
+    return knowhowHome();
+  }
+  function lessonCard(l) {
+    var done = state.knowhow.done[l.id];
+    var s = (l.title + " " + l.category + " " + l.task).toLowerCase();
+    return '<button class="kh-item session" data-act="kh-open" data-id="' + l.id + '" data-search="' + esc(s) + '" style="cursor:pointer;text-align:left;width:100%;font:inherit;display:block">' +
+      '<div class="session-head"><div><span style="font-size:18px">' + l.icon + '</span> <span class="session-week">' + esc(l.title) + "</span></div>" +
+      (done ? '<span class="badge badge-low">✓ zaliczone</span>' : '<span class="pill">' + l.time + " min</span>") + "</div>" +
+      '<div style="margin-top:6px"><span class="chip">' + esc(l.category) + "</span>" + (l.top10 ? ' <span class="chip accent">TOP 10</span>' : "") + "</div></button>";
+  }
+  function knowhowHome() {
+    var total = LESSONS.length;
+    var doneCount = LESSONS.filter(function (l) { return state.knowhow.done[l.id]; }).length;
+    var pct = Math.round(doneCount / total * 100);
+    var next = LESSONS.filter(function (l) { return !state.knowhow.done[l.id]; })[0];
+    return '<div class="screen">' +
+      '<div class="hero"><div class="hero-eyebrow">Moduł 2</div><h1 class="hero-title">📚 Know-How na teraz</h1>' +
+      '<p class="hero-sub">Wiedza w małych porcjach — dokładnie wtedy, gdy masz realne zadanie. Bez całodniowych szkoleń.</p></div>' +
+      whyBox(KH_THEORY) +
+      (next ?
+        '<div class="card" style="border:1.5px solid var(--primary)"><div class="card-title">✨ 1 rzecz na dziś</div>' +
+        '<p class="card-sub" style="margin:0 0 10px">' + esc(next.task) + "</p>" +
+        '<button class="btn btn-primary btn-block" data-act="kh-open" data-id="' + next.id + '">' + esc(next.title) + " • " + next.time + " min →</button></div>"
+        : '<div class="card"><div class="card-title">🎉 Wszystkie mikro-lekcje ukończone!</div><p class="card-sub" style="margin:0">Świetna robota. Wróć tu, gdy pojawi się nowe zadanie.</p></div>') +
+      '<div class="card"><div class="card-title">Postęp nauki</div><div class="progress"><i style="width:' + pct + '%"></i></div>' +
+      '<div class="progress-label">' + doneCount + " z " + total + " mikro-lekcji • " + pct + "%</div></div>" +
+      '<div class="section-label">Baza wiedzy i mikro-lekcje</div>' +
+      '<input id="khSearch" type="text" placeholder="Szukaj procedury lub tematu…" autocomplete="off" style="width:100%;font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:12px;margin-bottom:12px">' +
+      '<div id="khList" class="session-list">' + LESSONS.map(lessonCard).join("") + "</div></div>";
+  }
+  function knowhowLesson() {
+    var l = LESSONS.filter(function (x) { return x.id === ui.knowhow.openId; })[0];
+    if (!l) { ui.knowhow.openId = null; return knowhowHome(); }
+    var checks = state.knowhow.checks[l.id] || {};
+    var done = state.knowhow.done[l.id];
+    var q = l.quiz, qs = ui.knowhow.quiz;
+    var stepsHtml = l.steps.map(function (s, i) {
+      var on = !!checks[i];
+      return '<label style="display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--line);cursor:pointer">' +
+        '<input type="checkbox" data-act="kh-check" data-id="' + l.id + '" data-i="' + i + '" ' + (on ? "checked" : "") + ' style="margin-top:3px;flex:none">' +
+        '<span style="' + (on ? "opacity:.6;text-decoration:line-through" : "") + '">' + esc(s) + "</span></label>";
+    }).join("");
+    var quizHtml;
+    if (qs && qs.answered) {
+      quizHtml = '<div class="why" style="border-left-color:' + (qs.correct ? "var(--ok)" : "var(--danger)") + '">' +
+        '<p style="margin:0;font-weight:700">' + (qs.correct ? "✅ Dobrze!" : "❌ Niezupełnie") + "</p>" +
+        '<p style="margin:6px 0 0;font-size:14px">Poprawna odpowiedź: <b>' + esc(q.options[q.correct]) + "</b></p>" +
+        (qs.correct ? "" : '<button class="btn btn-secondary btn-sm" data-act="kh-retry" data-id="' + l.id + '" style="margin-top:10px">Spróbuj ponownie</button>') + "</div>";
+    } else {
+      quizHtml = '<div class="choice-list">' + q.options.map(function (o, i) {
+        return '<button class="choice" data-act="kh-answer" data-id="' + l.id + '" data-i="' + i + '"><span class="dot"></span><span>' + esc(o) + "</span></button>";
+      }).join("") + "</div>";
+    }
+    return '<div class="screen">' +
+      '<button class="btn btn-ghost btn-sm" data-act="kh-back">← Wszystkie lekcje</button>' +
+      '<div class="hero" style="margin-top:10px"><h1 class="hero-title" style="font-size:23px">' + l.icon + " " + esc(l.title) + "</h1>" +
+      '<p class="hero-sub"><span class="chip">' + esc(l.category) + '</span> <span class="pill">' + l.time + " min</span>" + (done ? ' <span class="badge badge-low">✓ zaliczone</span>' : "") + "</p></div>" +
+      '<div class="why"><div class="why-title">⏱️ Dlaczego teraz</div><p>' + esc(l.task) + " Ucz się tej jednej rzeczy w kontekście realnego zadania — to odciąża pamięć roboczą.</p></div>" +
+      '<div class="card"><div class="card-title">Kroki</div>' + stepsHtml + "</div>" +
+      '<div class="card"><div class="card-title">🧠 Sprawdź się</div><p class="card-sub" style="margin:0 0 10px">' + esc(q.q) + "</p>" + quizHtml + "</div></div>";
   }
 
   /* ---------- widok: TYDZIEŃ ---------- */
@@ -348,7 +418,7 @@
   function render() {
     var r = currentRoute(), html;
     if (r === "buddy") html = viewBuddy();
-    else if (r === "knowhow") html = viewPreview(KNOWHOW_PREVIEW);
+    else if (r === "knowhow") html = viewKnowhow();
     else if (r === "expectations") html = viewPreview(EXPECT_PREVIEW);
     else if (r === "week") html = viewWeek();
     else html = viewStart();
@@ -415,6 +485,16 @@
       if (missing) { var er2 = document.getElementById("weekErr"); if (er2) er2.textContent = "Uzupełnij przynajmniej pierwsze pola, żeby zapisać."; return; }
       state.week[tool].push(entry2); ui.week.mode = "home"; save(); render();
     }
+    else if (act === "kh-open") { ui.knowhow.openId = d.id; ui.knowhow.quiz = null; render(); }
+    else if (act === "kh-back") { ui.knowhow.openId = null; ui.knowhow.quiz = null; render(); }
+    else if (act === "kh-retry") { ui.knowhow.quiz = null; render(); }
+    else if (act === "kh-answer") {
+      var kl = LESSONS.filter(function (x) { return x.id === d.id; })[0];
+      var correct = +d.i === kl.quiz.correct;
+      ui.knowhow.quiz = { answered: true, picked: +d.i, correct: correct };
+      if (correct) { state.knowhow.done[d.id] = true; save(); }
+      render();
+    }
   }
   function onChange(e) {
     var t = e.target;
@@ -426,6 +506,13 @@
       if (c) c.textContent = Object.keys(ui.week.answers).length + "/" + cfg.items.length + " odpowiedzi";
       var er = document.getElementById("weekErr"); if (er) er.textContent = "";
     }
+    if (t.matches && t.matches('input[data-act="kh-check"]')) {
+      var id = t.dataset.id, ix = +t.dataset.i;
+      if (!state.knowhow.checks[id]) state.knowhow.checks[id] = {};
+      state.knowhow.checks[id][ix] = t.checked; save();
+      var lab = t.closest("label"), sp = lab ? lab.querySelector("span") : null;
+      if (sp) { sp.style.opacity = t.checked ? ".6" : ""; sp.style.textDecoration = t.checked ? "line-through" : ""; }
+    }
   }
   function onInput(e) {
     var t = e.target;
@@ -433,11 +520,20 @@
       var tgt = document.getElementById(t.dataset.target);
       if (tgt) tgt.textContent = t.value;
     }
+    if (t.id === "khSearch") {
+      var qv = (t.value || "").toLowerCase();
+      var items = document.querySelectorAll("#khList .kh-item");
+      for (var i = 0; i < items.length; i++) {
+        var sdata = items[i].getAttribute("data-search") || "";
+        items[i].style.display = sdata.indexOf(qv) > -1 ? "" : "none";
+      }
+    }
   }
   function resetTransient() {
     ui.startedQuiz = false; ui.buddyStep = 0; ui.buddyAnswers = {};
     ui.openSession = null; ui.sessErr = null;
     ui.week = { mode: "home", answers: {}, lastTool: null };
+    ui.knowhow = { openId: null, quiz: null };
   }
 
   /* ---------- init ---------- */
