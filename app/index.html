@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buddy app — wsparcie na starcie w pracy</title>
+  <meta name="description" content="Buddy app — prototyp wsparcia młodych dorosłych rozpoczynających pracę w korporacji. Moduły: Buddy Match, Know-How, Jasne Oczekiwania." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Górny pasek -->
+    <header class="app-header">
+      <div class="brand">
+        <span class="brand-logo" aria-hidden="true">🤝</span>
+        <div class="brand-text">
+          <strong>Buddy app</strong>
+          <span class="brand-sub">Twoje wsparcie na starcie</span>
+        </div>
+      </div>
+      <button id="resetBtn" class="ghost-btn" type="button" title="Wyczyść dane demo">Reset demo</button>
+    </header>
+
+    <!-- Główny widok (renderowany przez JS) -->
+    <main id="view" class="view" tabindex="-1">
+      <noscript>
+        <p style="padding:24px">Ta aplikacja wymaga włączonego JavaScriptu.</p>
+      </noscript>
+    </main>
+
+    <!-- Dolna nawigacja -->
+    <nav class="tabbar" aria-label="Nawigacja główna">
+      <a class="tab" href="#start"        data-route="start">        <span class="tab-ico" aria-hidden="true">🏠</span><span class="tab-lbl">Start</span></a>
+      <a class="tab" href="#buddy"        data-route="buddy">        <span class="tab-ico" aria-hidden="true">🧑‍🤝‍🧑</span><span class="tab-lbl">Buddy</span></a>
+      <a class="tab" href="#knowhow"      data-route="knowhow">      <span class="tab-ico" aria-hidden="true">📚</span><span class="tab-lbl">Know-How</span></a>
+      <a class="tab" href="#expectations" data-route="expectations"> <span class="tab-ico" aria-hidden="true">🎯</span><span class="tab-lbl">Oczekiwania</span></a>
+      <a class="tab" href="#week"         data-route="week">         <span class="tab-ico" aria-hidden="true">💚</span><span class="tab-lbl">Tydzień</span></a>
+    </nav>
+  </div>
+
+  <!-- Dane treściowe, potem logika. Klasyczne skrypty (bez modułów/fetch),
+       żeby działało też po otwarciu pliku z dysku (file://). -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

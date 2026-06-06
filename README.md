@@ -14,6 +14,7 @@ A small web project hosted on **GitHub Pages**.
 | `index.html` | The page served at the live URL (currently the placeholder). |
 | `.github/workflows/deploy-pages.yml` | Auto-deploys the site to GitHub Pages on every push to `main`. |
 | `.gitignore` | Ignores common JS / Node build artifacts. |
+| `app/` | Prototyp **Buddy app** (w budowie): `index.html` + `styles.css` + `app.js` + `data.js`. |
 
 ## View it locally
 
@@ -53,7 +54,13 @@ git push origin main                     # this triggers the deploy
 git switch claude/brave-einstein-EDGb3   # back to working
 ```
 
-## Planned
+## Prototyp — Buddy app (w toku)
 
-- [ ] Replace the placeholder with a **JS prototype app** (concept TBD).
-- [ ] Flesh out styling and interactions.
+Wsparcie młodych dorosłych na starcie pracy w korporacji (na podstawie raportu z badania).
+Kod w folderze `app/`. Podgląd lokalnie: otwórz **`app/index.html`** w przeglądarce.
+
+- [x] Szkielet aplikacji + nawigacja + panel „Twój tydzień" (PSS‑10, UWES‑9, CBT, self‑compassion)
+- [x] Moduł **Buddy Match** — quiz → dopasowanie buddy/seniora → 3 sesje 1:1 + mini‑ankiety
+- [ ] Moduł **Know‑How na teraz** (mikrolearning just‑in‑time)
+- [ ] Moduł **Jasne Oczekiwania** (check‑in „Weekly 15")
+- [ ] Docelowo: przeniesienie `app/` do katalogu głównego (zastąpienie placeholdera)
