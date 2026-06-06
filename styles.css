@@ -3,22 +3,22 @@
   /* tła i powierzchnie — ciepłe, kremowo-brzoskwiniowe */
   --bg: #fdeee1;
   --bg-2: #fbdfce;
-  --surface: #fffaf5;
-  --surface-2: #fbe7d8;
-  --line: #ecd2bf;
-  /* tekst — mocny kontrast, ciepła głęboka śliwka */
-  --text: #2c1219;
-  --muted: #6e4a54;
+  --surface: #fffdfa;
+  --surface-2: #fdecdd;
+  --line: #eccdb4;
+  /* tekst — bardzo mocny kontrast, ciepła głęboka śliwka */
+  --text: #29101a;
+  --muted: #5e3a45;
   /* akcent główny — soczysta koralowa czerwień zachodu */
-  --primary: #e6482b;
-  --primary-700: #bb3119;
-  --primary-50: #ffe3d8;
+  --primary: #e8431f;
+  --primary-700: #b62d14;
+  --primary-50: #ffe0d4;
   /* akcent ciepły — soczysty bursztyn */
-  --accent: #f2951b;
-  --accent-50: #ffe6c2;
-  --warm: #ff8a5c;
-  --danger: #d83a2c;
-  --ok: #4f9b6f;
+  --accent: #f58e0b;
+  --accent-50: #ffe3b8;
+  --warm: #ff7f4d;
+  --danger: #d6362a;
+  --ok: #4a9568;
   --shadow: 0 16px 36px -20px rgba(122, 38, 38, .42);
   --shadow-sm: 0 6px 16px -10px rgba(122, 38, 38, .38);
   --radius: 18px;
@@ -34,11 +34,11 @@ body {
   color: var(--text);
   /* niebo zachodzącego słońca: złoto u góry, koralowa chmura, śliwkowy zmierzch u dołu */
   background:
-    radial-gradient(1000px 460px at 86% -10%, #ffcf86 0%, rgba(255,207,134,0) 60%),
-    radial-gradient(980px 540px at 118% 4%, #ff875c 0%, rgba(255,135,92,0) 56%),
-    radial-gradient(760px 500px at -18% 118%, #ad5f8c 0%, rgba(173,95,140,0) 60%),
-    radial-gradient(720px 440px at 28% 122%, #e85d34 0%, rgba(232,93,52,0) 62%),
-    linear-gradient(180deg, #fff6ec 0%, #ffe3cf 50%, #f6c3a9 100%);
+    radial-gradient(1100px 520px at 88% -12%, #ffc25e 0%, rgba(255,194,94,0) 58%),
+    radial-gradient(1000px 560px at 120% 8%, #ff7a4d 0%, rgba(255,122,77,0) 55%),
+    radial-gradient(820px 560px at -20% 120%, #9c5689 0%, rgba(156,86,137,0) 60%),
+    radial-gradient(760px 460px at 26% 124%, #e24a23 0%, rgba(226,74,35,0) 60%),
+    linear-gradient(180deg, #ffeccb 0%, #ffd0a6 48%, #f6ad86 100%);
   background-attachment: fixed;
   min-height: 100vh;
   line-height: 1.5;
@@ -58,7 +58,7 @@ body {
   position: sticky; top: 0; z-index: 20;
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
   padding: 14px 18px;
-  background: rgba(255, 250, 245, .84);
+  background: rgba(255, 251, 247, .92);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--line);
 }
@@ -252,7 +252,7 @@ body {
 .tabbar {
   position: sticky; bottom: 0; z-index: 20;
   display: flex; justify-content: space-around;
-  background: rgba(255, 250, 245, .93);
+  background: rgba(255, 251, 247, .96);
   backdrop-filter: blur(10px);
   border-top: 1px solid var(--line);
   padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
